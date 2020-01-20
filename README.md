@@ -1,8 +1,5 @@
-# famnit-tutorials
+## Simple google auth authenticate with backend
 
-## REPRODUCE:
+This is a simple example, how to validate idToken from OAuth2 Authentication.
 
-1) Add .env to the root folder
-2) in the console write npm run start-dev to run project locally
-3) if you want to publish new version push the project (nneeds to be merged to master)
-4) Go to heroku, login with famnit credentials and press deploy
+Shows how to issue an access token and make protected route
