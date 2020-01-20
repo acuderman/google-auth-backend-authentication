@@ -7,10 +7,11 @@ import { protectedRoute } from '../../middleware/protected';
 const router = Router()
 
 router.post('/token', async (req, res) => {
-    const { id_token, youtube_access_token } = req.body
+    const { id_token } = req.body
 
+    let tokenInfo;
     try {
-        await verifyToken(id_token)
+        tokenInfo = await verifyToken(id_token)
     } catch(e) {
         res.status(400).json({
             err_code: 'INVALID_ID_TOKEN' 
@@ -18,11 +19,11 @@ router.post('/token', async (req, res) => {
         return
     }
 
-    const access_token = jwt.sign({ 
-        youtube_api: youtube_access_token,
+    const access_token = jwt.sign({
+        email: tokenInfo.email,
         role: 'admin',
-        exp: parseInt(youtubeTokenData.data.exp),
-        iss: 'famnit-tutorials'
+        exp: Math.floor(Date.now() / 1000) + (60 * 60),
+        iss: 'example-auth'
      }, SERVER_PRIVATE_KEY);
 
      res.status(200).json({
